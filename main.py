@@ -55,6 +55,9 @@ class MyClient(discord.Client):
                 await message.channel.send(msg)
             except:
                await message.channel.send("Usage: ;say [MESSAGE]")
+        if message.content == ";swoon":
+            await message.channel.send("https://tenor.com/view/stfu-shut-up-shut-the-hell-up-sybau-deltarune-gif-8176397554908480927")
+            await message.channel.send("But ignore the stfu part")
         if message.content == ";larp":
             await message.channel.send(" https://klipy.com/gifs/theres-no-limit-to-the-larp-flight")
         if message.content == ";dbgg":
@@ -78,10 +81,14 @@ class MyClient(discord.Client):
            await message.channel.send("No, mason did not kick me"); print("it appears that i have not been kicked by mason!!!")
         if message.content == ";yttl":
            await message.channel.send("https://tenor.com/view/youre-taking-too-long-jackenstein-deltarune-chapter-4-gif-9089560851254498960"); print("Your taking too long!!")
+        if message.content == ";no-iphone":
+            await message.channel.send("https://klipy.com/gifs/iphone-24")
+
         if message.content == ";ls":
           await message.channel.send("""=====All Garry text commands=====")
           await message.channel.send(";1984"); - sends the 1984 gif 
           await message.channel.send(";ping"); - pings the bot
+          ;no-iphone - Sends the iPhone gif
          # await message.channel.send(";spam-brick-wait=1"); --purged cmd--
          # await message.channel.send(";spam-whatever");     --purged cmd--
           await message.channel.send(";stop"); - disables the bot
