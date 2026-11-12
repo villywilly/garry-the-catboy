@@ -1,6 +1,6 @@
 from email import message
 from fileinput import filename
-
+import random
 import discord, shlex
 import time, json, subprocess
 import sys, datetime, os
@@ -58,6 +58,40 @@ class MyClient(discord.Client):
         if message.content == ";swoon":
             await message.channel.send("https://tenor.com/view/stfu-shut-up-shut-the-hell-up-sybau-deltarune-gif-8176397554908480927")
             await message.channel.send("But ignore the stfu part")
+        if message.content.split()[0] == ";gayrate":
+            gaypeople = ["mason","ronin","leo","ari"]
+            gaypicked = message.content.split()[1]
+            print(gaypicked)
+            match gaypicked:
+                case "mason":
+                    await message.channel.send("Mason is 105% gay!!")
+                case "ronin":
+                    await message.channel.send("Ronin is 100% a homosexual man!!")
+                case "leo":
+                    await message.channel.send("Leo is like 45-50% gay")
+                case "will":
+                    await message.channel.send("Will is like 45-55% gay")
+                case "ari":
+                    await message.channel.send("Ari is prolly gay")
+                case "peopleWhoUseTul":
+                    await message.channel.send("peopleWhoUseTul is 500% gay!!")
+                case _:
+                    gayperc = random.randint(0,100)
+                    await message.channel.send(f"{gaypicked} is {gayperc}% gay!!")
+        if message.content == ";ronin-letter":
+            await message.channel.send("S")
+        if message.content == ";gaylist":
+            await message.channel.send("""
+            =====ALL GAY (or bi / pan / etc ) MEN IN THIS SERVER=====
+            - Ronin
+            - Will
+            - Leo""")
+        if message.content == ";closetedlist":
+            await message.channel.send("""
+            =====ALL CLOSETED GAY MEN IN THIS SERVER=====
+            - Mason
+            - Dante
+            - Ari""")
         if message.content == ";larp":
             await message.channel.send(" https://klipy.com/gifs/theres-no-limit-to-the-larp-flight")
         if message.content == ";dbgg":
@@ -110,6 +144,8 @@ class MyClient(discord.Client):
         if message.content == ";1984":
            print("literally 1984")
            await message.channel.send("https://tenor.com/view/1984-literally-1984-gif-15073437220075643382")
+        #if message.content.split()[0] == ";ask":
+          #  await message.channel.send("Wait for reply..")
         if message.content == ";stfu":
            print("stfu")
            await message.channel.send("https://tenor.com/view/stfu-shut-up-shut-the-hell-up-sybau-deltarune-gif-8176397554908480927")
