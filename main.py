@@ -1,203 +1,74 @@
-from email import message
-from fileinput import filename
+import asyncio
+import os
 import random
-import discord, shlex
-import time, json, subprocess
-import sys, datetime, os
+import discord
+import requests
+from discord.ext import commands
 from dotenv import load_dotenv
+
 load_dotenv()
 token = os.getenv("TOKEN")
-async def dm(usr, msg):
-	user = client.get_user(usr)  
-	await user.send(msg)
-
-try:
-    setmessage = sys.argv[1]
-    print("Message recieved from sys")
-except:
-    setmessage = "`Uh oh there is not a set message yet`"
-    print("No message recieved from sys, using default message.")
-
-#setmessage = "`Uh oh there is not a set message yet`"
-def log(messg, filename):
-    now = datetime.datetime.now()
-    logmsg = f"{now} - {messg}\n"
-    try:
-        # Open the file in append mode
-        with open(filename, 'a') as file:
-            # Write the log message to the file
-            file.write(logmsg)
-    except FileNotFoundError:
-        print(f"File '{filename}' not found. Creating new file...")
-        # Open the file for the first time
-        with open(filename, 'w') as file:
-            file.write(logmsg)
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print('Logged on as', self.user)
-        with open ("settings.json","r") as file:
-            localsettings=json.load(file)
-
-
-    async def on_message(self, message):
-        # don't respond to ourselves
-        if message.author == self.user:
-            return
-        log(f"{message.author}: {message.content}", "log.txt")
-        print(f"{message.author}: {message.content}")
-        #for i in range(5):
-            #    await message.channel.send(f"@everyone Uh oh someone said cracker! {i}")
-        if message.content.split()[0] == ";say":
-            try:
-                replaced = message.content.replace(""", """).replace(""", """).replace("'", "'").replace("'", "'")
-                args = shlex.split(message.content)
-                msg=args[1]
-                await message.channel.send(msg)
-            except:
-               await message.channel.send("Usage: ;say [MESSAGE]")
-        if message.content == ";swoon":
-            await message.channel.send("https://tenor.com/view/stfu-shut-up-shut-the-hell-up-sybau-deltarune-gif-8176397554908480927")
-            await message.channel.send("But ignore the stfu part")
-        if message.content.split()[0] == ";gayrate":
-            gaypeople = ["mason","ronin","leo","ari"]
-            gaypicked = message.content.split()[1]
-            print(gaypicked)
-            match gaypicked:
-                case "mason":
-                    await message.channel.send("Mason is 105% gay!!")
-                case "ronin":
-                    await message.channel.send("Ronin is 100% a homosexual man!!")
-                case "leo":
-                    await message.channel.send("Leo is like 45-50% gay")
-                case "will":
-                    await message.channel.send("Will is like 45-55% gay")
-                case "ari":
-                    await message.channel.send("Ari is prolly gay")
-                case "peopleWhoUseTul":
-                    await message.channel.send("peopleWhoUseTul is 500% gay!!")
-                case _:
-                    gayperc = random.randint(0,100)
-                    await message.channel.send(f"{gaypicked} is {gayperc}% gay!!")
-        if message.content == ";ronin-letter":
-            await message.channel.send("S")
-        if message.content == ";gaylist":
-            await message.channel.send("""
-            =====ALL GAY (or bi / pan / etc ) MEN IN THIS SERVER=====
-            - Ronin
-            - Will
-            - Leo""")
-        if message.content == ";closetedlist":
-            await message.channel.send("""
-            =====ALL CLOSETED GAY MEN IN THIS SERVER=====
-            - Mason
-            - Dante
-            - Ari""")
-        if message.content == ";larp":
-            await message.channel.send(" https://klipy.com/gifs/theres-no-limit-to-the-larp-flight")
-        if message.content == ";dbgg":
-            await message.channel.send("https://klipy.com/gifs/du-bist-gut-genug-2")
-        if message.content == ";tenna":
-            await message.channel.send("https://tenor.com/iO0cg9xyYGF.gif")
-        if message.content == ';spam-brick-wait=1':
-            for i in range(100):
-                 await message.channel.send('<@1138621441345065060>'); print("spamming w level 1")
-                 time.sleep(1)
-        elif message.content == ';spam-whatever':
-            for i in range(100):
-                await message.channel.send('https://tenor.com/view/ai-slop-ai-67-meme-laser-eyes-gif-15578141754060597010'); print("Spamming w level 2")
-                time.sleep(0.01)
-        if message.content == ";stop":
-           await message.channel.send('Okay fine i stop now'); print("stopping bot")
-           exit()
-        if message.content == ";send-current-set-message":
-           await message.channel.send(setmessage); print("set message sent")
-        if message.content == ";did-mason-kick-me":
-           await message.channel.send("No, mason did not kick me"); print("it appears that i have not been kicked by mason!!!")
-        if message.content == ";yttl":
-           await message.channel.send("https://tenor.com/view/youre-taking-too-long-jackenstein-deltarune-chapter-4-gif-9089560851254498960"); print("Your taking too long!!")
-        if message.content == ";no-iphone":
-            await message.channel.send("https://klipy.com/gifs/iphone-24")
-
-        if message.content == ";ls":
-          await message.channel.send("""=====All Garry text commands=====")
-          await message.channel.send(";1984"); - sends the 1984 gif 
-          await message.channel.send(";ping"); - pings the bot
-          ;no-iphone - Sends the iPhone gif
-         # await message.channel.send(";spam-brick-wait=1"); --purged cmd--
-         # await message.channel.send(";spam-whatever");     --purged cmd--
-          await message.channel.send(";stop"); - disables the bot
-          await message.channel.send(";stfu"); - sends the stfu gif
-          await message.channel.send(";did-mason-kick-me"); - sends a message saying mason did not kick the bot
-          await message.channel.send(";yttl"); - sends a gif of jackenstein saying "your taking too long" 
-          await message.channel.send(";ls") - lists all commands
-          await message.channel.send(";dbgg") - sends a gif of du bist gut genug
-          await message.channel.send(";send-current-set-message) - sends the current set message
-          ;larp - theres no limit to the larp
-          ;say [message] - sends a message
-          ===Moderation commands===
-          ;log-secret - sends the log file to the user in a dm
-          ;log-public - sends the log file to the channel
-          ;clean [num messages to delete] - deletes the specified number of messages from the channel
-         # ;warn [member] [reason] - sends a DM message to the specified member with a reason --ignore, use sapphire--
-          """)
-          await message.channel.send("=================================")
-        if message.content == ";1984":
-           print("literally 1984")
-           await message.channel.send("https://tenor.com/view/1984-literally-1984-gif-15073437220075643382")
-        #if message.content.split()[0] == ";ask":
-          #  await message.channel.send("Wait for reply..")
-        if message.content == ";stfu":
-           print("stfu")
-           await message.channel.send("https://tenor.com/view/stfu-shut-up-shut-the-hell-up-sybau-deltarune-gif-8176397554908480927")
-        if message.content == ";ping":
-           await message.channel.send("recievedeth"); print("ping")
-        if message.content == ";log-public":
-            await message.channel.send(file=discord.File("log.txt"))
-            await message.channel.send("abc")
-        if message.content == ";log-secret":
-            #await message.channel.send("abc")
-            await message.author.send(file=discord.File("log.txt"))
-            await message.author.send("Here is the log file")
-            await message.delete()
-        if message.content.split()[0] == ";clean":
-            try:
-                num_messages = int(message.content.split()[1])
-                deleted_messages = await message.channel.purge(limit=num_messages)
-                #await message.channel.send(f"Deleted {len(deleted_messages)} messages", delete_after=5)
-            except (IndexError, ValueError):
-                await message.channel.send("Please specify a valid number of messages to delete.", delete_after=5)
-            print(f"Deleted {len(deleted_messages)} messages")
-        if message.content.split()[0].lower() == ";warn":
-            try:
-                warned_user = str(message.content.split()[1])
-                warning_reason = " ".join(message.content.split()[2:])
-            
-            
-                if not warned_user or not warning_reason:
-                    await message.channel.send("Usage: ;warn [user] [reason]", delete_after=3)
-                    return
-                dm(warned_user,warning_reason)
-        
-            
-                await message.author.send(f"Done! {warned_user} has been warned for: {warning_reason}")
-            
-                print(f"{warned_user} has been warned for: {warning_reason}")
-    
-            except (IndexError, ValueError):
-                await message.channel.send("Usage: ;warn [user] [reason]", delete_after=3)
-"""        if message.content.split()[0] == ";warn":
-            try:
-                user = str(message.content.split()[1])
-                reason = " ".join(message.content.split()[2:])
-                await user.send(f"{user}, you have been warned!")
-                await user.send(f"You have been warned for: {reason}")
-                await message.author.send(f"Done! {user} has been warned for: {reason}")
-                print(f"{user} has been warned for: {reason}")
-            except (IndexError, ValueError):
-                await message.channel.send("Please specify a valid user and reason.", delete_after=5)
-"""
 
 intents = discord.Intents.default()
 intents.message_content = True
-client = MyClient(intents=intents)
-client.run(token)
+prf = ";"
+bot = commands.Bot(command_prefix=prf, intents=intents)
+
+MODEL = "llama3.1"
+URL = "http://localhost:11434/api/chat"
+@bot.event
+async def on_ready():
+    print(f"Online as {bot.user}")
+async def on_command_error(ctx, error):
+    print(f"Command error: {error!r}")
+def call_model(prompt: str) -> str:
+    response = requests.post(
+        URL,
+        json={
+            "model": MODEL,
+            "messages": [{"role": "user", "content": prompt}],
+            "stream": False,
+        },
+        timeout=180,
+    )
+    response.raise_for_status()
+    return response.json()["message"]["content"].strip()
+
+@bot.command(name="prefix")
+async def prefix(ctx, prfix: str):
+    prf = prfix
+    ctx.send(f"Set {prf} as the prefix.")
+@bot.command(name="ask")
+async def ask(ctx, *, prompt: str):
+    async with ctx.typing():
+        try:
+            answer = await asyncio.to_thread(call_model, prompt)
+
+            # Discord messages have a 2,000-character limit.
+            for start in range(0, len(answer), 2000):
+                await ctx.send(answer[start:start + 2000])
+
+        except requests.RequestException as e:
+            await ctx.reply(f"Error connecting to the model: {e}")
+        except Exception as e:
+            await ctx.reply(f"An error occurred: {e}")
+
+@bot.command(name="ping")
+async def ping(ctx):
+   await ctx.send("Pong 🇻🇺🏳️‍🌈🇨🇳🇦🇷")
+@bot.command(name="say")
+async def say(ctx, *, said: str):
+    await ctx.send(said)
+@bot.command(name="pick")
+async def pick(ctx, *, said: str):
+    poss = [True, False]
+    await ctx.send(f"{said} is {random.choice(poss)}!")
+@bot.command(name="gayrate")
+async def gayrate(ctx, person: str):
+    await ctx.send(f"{person} is {random.randint(1,100)}% gay!")
+
+if not token:
+    raise RuntimeError("TOKEN is missing. Set it in your .env file.")
+
+bot.run(token)
+
