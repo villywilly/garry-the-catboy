@@ -66,7 +66,19 @@ async def pick(ctx, *, said: str):
 @bot.command(name="gayrate")
 async def gayrate(ctx, person: str):
     await ctx.send(f"{person} is {random.randint(1,100)}% gay!")
-
+@bot.command(name="ship")
+async def ship(ctx, p1: str, p2: str):
+    comp = random.randint(0,100)
+    spmsg = None
+    if comp <= 25:
+        spmsg = "Unlikely"
+    elif comp <= 50:
+        spmsg = "Its possible 🇦🇹🇩🇪🇭🇺⚛️🇵🇸🇦🇷🏳️‍🌈🏳️‍⚧️🇻🇺🇺🇸🇨🇭🇧🇦🇨🇳"
+    elif comp <= 75:
+        spmsg = "Pretty likely to happen "
+    elif comp <= 100:
+        spmsg = "Guarenteed!!"
+    await ctx.send(f"Shipping {p1} and {p2}\nThe compatibility is {comp}%\n{spmsg}")
 if not token:
     raise RuntimeError("TOKEN is missing. Set it in your .env file.")
 
