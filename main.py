@@ -77,8 +77,26 @@ async def ship(ctx, p1: str, p2: str):
     elif comp <= 75:
         spmsg = "Pretty likely to happen "
     elif comp <= 100:
-        spmsg = "Guarenteed!!"
+        spmsg = "Guaranteed!!"
     await ctx.send(f"Shipping {p1} and {p2}\nThe compatibility is {comp}%\n{spmsg}")
+@bot.command(name="guide")
+async def guide(ctx, optional=None):
+    match optional:
+        case "list":
+            await ctx.send("""All commands:
+                           ;gayrate (person) - Prints out a random percent value for how gay this person is
+                           ;ping - The bot sends a message saying "pong" if it is online and has required permissions
+                           ;say (query) - The bot will say what you typed in the query parameter
+                           ;ship (person1) (person2) - Ships the two selected people
+                           ;guide [whatYouNeedHelpWith] - Prints out a help menu, or various sub menus.
+                           ;ask (prompt) - Send a prompt to a local LLM (On this server we use Llama 3.1 on this instance of Garry TC)
+                           Note: (required) [optional]
+                           Note: With the exception of ;ask, and ;say: Please type other parameters in CamelCase or snake_case as spaces will seperate into different parameters.""")
+        case _:
+            await ctx.send("""Garry The Catboy (or Garry TG for short) is a discord bot mainly used for random fun in our discord server.
+            Developed by <@1315852798742757471> :pink_heart: :purple_heart: :blue_heart: with some help by <@1274180379036614750> :rainbow_flag:.\nIf you want to self host this bot, or contribute to it, it is available at [notacircle.net/ql.php?u=2](https://notacircle.net/ql.php?u=2) under the Gnu General Public License V3 (open source!!)More open source notes: This instance of Garry TG is hosted on a Fedora Linux server if you care about that. (which you prolly dont).
+            Help:
+            - guide list = list all commands\nAll commands use the semicolon (;) for the command prefix.""")
 if not token:
     raise RuntimeError("TOKEN is missing. Set it in your .env file.")
 
