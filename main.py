@@ -79,12 +79,24 @@ async def ship(ctx, p1: str, p2: str):
     elif comp <= 100:
         spmsg = "Guaranteed!!"
     await ctx.send(f"Shipping {p1} and {p2}\nThe compatibility is {comp}%\n{spmsg}")
+@bot.command(name="lgbtqrate")
+async def lgbtqrate(ctx, *, person: str):
+    idents = ["straight","cis","gay","lesbian","trans","bi","pan","aroace","omni","non binary","intersex"]
+    picked = random.choice(idents)
+    match picked:
+        case "straight":
+            await ctx.send(f"{person} is straight")
+        case "cis":
+            await ctx.send(f"{person} is cis")
+        case _:
+            await ctx.send(f"{person} is {picked} :rainbow_flag:")
 @bot.command(name="guide")
 async def guide(ctx, optional=None):
     match optional:
         case "list":
             await ctx.send("""All commands:
                            ;gayrate (person) - Prints out a random percent value for how gay this person is
+                           ;lgbtqrate (person) - says if this person is straight or not et cetera
                            ;ping - The bot sends a message saying "pong" if it is online and has required permissions
                            ;say (query) - The bot will say what you typed in the query parameter
                            ;ship (person1) (person2) - Ships the two selected people
